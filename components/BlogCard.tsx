@@ -2,22 +2,24 @@
 import Image from "next/image";
 import { CalendarIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link"; // Import Link for Next.js routing
+import Link from "next/link";
 
 interface BlogCardProps {
   title: string;
-  description?: string; // Optional since not all posts may have it
+  description?: string;
   date: string;
-  thumbnail?: string; // Matches Contentlayer field name
+  thumbnail?: string;
   slug: string;
+  category: string; // Added category prop
 }
 
 export default function BlogCard({
   title,
-  description = "No description available.", // Fallback if undefined
+  description = "No description available.",
   date,
-  thumbnail = "/placeholder.svg?height=200&width=300", // Default placeholder
+  thumbnail = "/images/placeholder-image.jpg?height=200&width=300",
   slug,
+  category, // Added category to destructuring
 }: BlogCardProps) {
   return (
     <Card className="overflow-hidden border-0 shadow-sm">
@@ -26,7 +28,7 @@ export default function BlogCard({
           <div className="flex flex-col md:flex-row">
             <div className="relative h-48 w-full md:h-auto md:w-1/3">
               <Image
-                src={thumbnail} // Uses Contentlayer thumbnail or fallback
+                src={thumbnail}
                 alt={`${title} thumbnail`}
                 fill
                 className="object-cover"
@@ -42,11 +44,16 @@ export default function BlogCard({
                   {description}
                 </p>
               </div>
-              <div className="mt-4 flex items-center text-sm text-muted-foreground">
-                <CalendarIcon className="mr-1 h-4 w-4" />
-                <time dateTime={date}>
-                  {new Date(date).toLocaleDateString()}
-                </time>
+              <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
+                <div className="flex items-center">
+                  <CalendarIcon className="mr-1 h-4 w-4" />
+                  <time dateTime={date}>
+                    {new Date(date).toLocaleDateString()}
+                  </time>
+                </div>
+                <span className="rounded-full bg-muted px-2 py-1 text-xs capitalize">
+                  {category}
+                </span>
               </div>
             </div>
           </div>
