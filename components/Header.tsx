@@ -1,3 +1,4 @@
+"use client";
 // components/Header.tsx
 import Link from "next/link";
 import { ModeToggle } from "@/components/mode-toggle";
