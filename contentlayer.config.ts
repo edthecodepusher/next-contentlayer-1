@@ -6,6 +6,8 @@ import {
 } from "contentlayer/source-files";
 import rehypeHighlight from "rehype-highlight";
 
+import type { RehypePlugin } from "@contentlayer/core";
+
 // Define computed fields with TypeScript typing
 const computedFields: ComputedFields = {
   slug: {
@@ -59,7 +61,6 @@ export const Post = defineDocumentType(() => ({
     category: {
       type: "string",
       required: true,
-      // Optional: add predefined category options
       options: ["tech", "lifestyle", "coding", "news"], // Adjust these to your needs
     },
   },
@@ -71,6 +72,6 @@ export default makeSource({
   contentDirPath: "./content",
   documentTypes: [Post, Page],
   mdx: {
-    rehypePlugins: [rehypeHighlight], // Add syntax highlighting with rehype-highlight
+    rehypePlugins: [[rehypeHighlight] as RehypePlugin], // Explicitly type and call as a plugin
   },
 });
