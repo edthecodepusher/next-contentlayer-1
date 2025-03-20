@@ -4,6 +4,7 @@ import {
   makeSource,
   ComputedFields,
 } from "contentlayer/source-files";
+import rehypeHighlight from "rehype-highlight";
 
 // Define computed fields with TypeScript typing
 const computedFields: ComputedFields = {
@@ -69,4 +70,7 @@ export const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "./content",
   documentTypes: [Post, Page],
+  mdx: {
+    rehypePlugins: [rehypeHighlight], // Add syntax highlighting with rehype-highlight
+  },
 });
