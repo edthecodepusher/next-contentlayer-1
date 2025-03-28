@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu } from "lucide-react";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Menu, Mountain, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
+// Define routes array
 const routes = [
   {
     href: "/",
@@ -31,104 +30,68 @@ const routes = [
   },
 ];
 
-export function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolling(true);
-
-      // Clear the previous timeout
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-
-      // Set a new timeout to detect when scrolling stops
-      const timeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 150); // Adjust this value to control how quickly the navbar becomes opaque after scrolling stops
-
-      setScrollTimeout(timeout);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-    };
-  }, [scrollTimeout]);
+export default function Header() {
+  const { theme, setTheme } = useTheme();
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full border-b backdrop-blur transition-opacity duration-200",
-        isScrolling
-          ? "bg-background/50 opacity-80"
-          : "bg-background/95 opacity-100"
-      )}
-    >
-      <div className="container flex h-16 items-center">
-        <div className="mr-4 flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="font-bold">MyBlog</span>
-          </Link>
-        </div>
-
-        {/* Desktop navigation */}
-        <nav className="hidden md:flex md:flex-1">
-          <ul className="flex gap-6">
-            {routes.map((route) => (
-              <li key={route.href}>
-                <Link
-                  href={route.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary"
-                  )}
-                >
-                  {route.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+    <header className="bg-background text-foreground sticky top-0 z-50 w-full border-b border-border">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+        <Link
+          href="#"
+          className="flex items-center gap-2 font-bold"
+          prefetch={false}
+        >
+          <Mountain className="h-6 w-6" />
+          <span className="sr-only">Acme Inc</span>
+        </Link>
+        <nav className="hidden md:flex md:items-center md:gap-6">
+          {routes.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              className="text-sm font-medium hover:text-primary transition-colors"
+              prefetch={false}
+            >
+              {route.label}
+            </Link>
+          ))}
         </nav>
-
-        {/* Mobile navigation */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild className="md:hidden ml-auto">
-            <Button variant="ghost" size="icon" className="h-8 w-8">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
+        <div className="flex items-center gap-4">
+          <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle navigation menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                <div className="grid gap-4 p-6">
+                  {routes.map((route) => (
+                    <Link
+                      key={route.href}
+                      href={route.href}
+                      className="text-lg font-medium hover:text-primary transition-colors"
+                      prefetch={false}
+                    >
+                      {route.label}
+                    </Link>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+          <div className="hidden md:block">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label="Toggle theme"
+            >
+              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
-          </SheetTrigger>
-          <SheetContent side="right">
-            <nav className="flex flex-col gap-4 mt-8">
-              {routes.map((route) => (
-                <Link
-                  key={route.href}
-                  href={route.href}
-                  className="text-lg font-medium transition-colors hover:text-primary"
-                  onClick={() => setOpen(false)}
-                >
-                  {route.label}
-                </Link>
-              ))}
-            </nav>
-          </SheetContent>
-        </Sheet>
-
-        {/* Right side actions - desktop only */}
-        <div className="hidden md:flex md:items-center md:gap-2 md:ml-auto">
-          <Button variant="ghost" size="sm">
-            Subscribe
-          </Button>
-          <Button size="sm">Sign In</Button>
+          </div>
         </div>
       </div>
     </header>

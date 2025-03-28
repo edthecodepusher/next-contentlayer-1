@@ -4,7 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
-import Header from "@/components/Header"; // Import the new Header component
+import Header from "@/components/NavBar"; // Import the new Header component
 import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={`antialiased min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 ${inter.className} flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="max-w-2xl mx-auto py-10 px-4 flex-grow">
+          <div className="mx-auto py-10 px-4 flex-grow">
             <Header /> {/* Replace the old header with the new component */}
             <main>{children}</main>
           </div>
