@@ -10,7 +10,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-6 mt-auto">
+    <footer className="bg-background text-foreground py-6 mt-auto border-t border-border">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
@@ -23,7 +23,7 @@ export default function Footer() {
               href="https://x.com/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300 transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200"
               aria-label="Twitter"
             >
               <span>
@@ -34,7 +34,7 @@ export default function Footer() {
               href="https://facebook.com/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300 transition-colors"
+              className="text-muted-foreground hover:text-secondary transition-colors duration-200"
               aria-label="Facebook"
             >
               <span>
@@ -45,7 +45,7 @@ export default function Footer() {
               href="https://github.com/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300 transition-colors"
+              className="text-muted-foreground hover:text-accent transition-colors duration-200"
               aria-label="GitHub"
             >
               <span>
@@ -56,7 +56,7 @@ export default function Footer() {
               href="https://discord.gg/yourinvite"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300 transition-colors"
+              className="text-muted-foreground hover:text-chart-4 transition-colors duration-200"
               aria-label="Discord"
             >
               <span>
@@ -67,7 +67,7 @@ export default function Footer() {
               href="https://linkedin.com/in/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300 transition-colors"
+              className="text-muted-foreground hover:text-chart-5 transition-colors duration-200"
               aria-label="LinkedIn"
             >
               <span>
