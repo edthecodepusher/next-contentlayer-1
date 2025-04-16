@@ -1,6 +1,5 @@
-// components/BlogCard.tsx
 import Image from "next/image";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, ClockIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 
@@ -11,6 +10,7 @@ interface BlogCardProps {
   thumbnail?: string;
   slug: string;
   category: string;
+  readTime: string;
 }
 
 export default function BlogCard({
@@ -20,6 +20,7 @@ export default function BlogCard({
   thumbnail = "/images/placeholder-image.jpg?height=200&width=300",
   slug,
   category,
+  readTime,
 }: BlogCardProps) {
   return (
     <Card className="overflow-hidden border-0 shadow-sm hover:shadow-md transition-shadow">
@@ -45,11 +46,17 @@ export default function BlogCard({
                 </p>
               </div>
               <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
-                <div className="flex items-center">
-                  <CalendarIcon className="mr-1 h-4 w-4 text-accent" />
-                  <time dateTime={date}>
-                    {new Date(date).toLocaleDateString()}
-                  </time>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center">
+                    <CalendarIcon className="mr-1 h-4 w-4 text-accent" />
+                    <time dateTime={date}>
+                      {new Date(date).toLocaleDateString()}
+                    </time>
+                  </div>
+                  <div className="flex items-center">
+                    <ClockIcon className="mr-1 h-4 w-4 text-accent" />
+                    <span>{readTime}</span>
+                  </div>
                 </div>
                 <span className="rounded-full bg-secondary px-2 py-1 text-xs capitalize text-secondary-foreground">
                   {category}

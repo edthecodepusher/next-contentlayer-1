@@ -5,30 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Menu, Mountain, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-
-// Define routes array
-const routes = [
-  {
-    href: "/",
-    label: "Home",
-  },
-  {
-    href: "/blog",
-    label: "Blog",
-  },
-  {
-    href: "/categories",
-    label: "Categories",
-  },
-  {
-    href: "/about",
-    label: "About",
-  },
-  {
-    href: "/contact",
-    label: "Contact",
-  },
-];
+import siteConfig from "@/config/siteConfig";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -37,22 +14,22 @@ export default function Header() {
     <header className="bg-background text-foreground sticky top-0 z-50 w-full border-b border-border">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link
-          href="#"
+          href="/"
           className="flex items-center gap-2 font-bold text-primary"
           prefetch={false}
         >
           <Mountain className="h-6 w-6 text-accent" />
-          <span className="sr-only">Acme Inc</span>
+          <span>{siteConfig.name}</span>
         </Link>
         <nav className="hidden md:flex md:items-center md:gap-6">
-          {routes.map((route, index) => (
+          {siteConfig.mainNav.map((item, index) => (
             <Link
-              key={route.href}
-              href={route.href}
+              key={item.href}
+              href={item.href}
               className="text-sm font-medium text-foreground hover:text-[hsl(var(--chart-1))] transition-colors duration-200"
               prefetch={false}
             >
-              {route.label}
+              {item.title}
             </Link>
           ))}
         </nav>
@@ -71,16 +48,16 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="left" className="bg-background">
                 <div className="grid gap-4 p-6">
-                  {routes.map((route, index) => (
+                  {siteConfig.mainNav.map((item, index) => (
                     <Link
-                      key={route.href}
-                      href={route.href}
+                      key={item.href}
+                      href={item.href}
                       className={`text-lg font-medium text-foreground hover:text-[hsl(var(--chart-${
                         index + 1
                       }))] transition-colors duration-200`}
                       prefetch={false}
                     >
-                      {route.label}
+                      {item.title}
                     </Link>
                   ))}
                 </div>

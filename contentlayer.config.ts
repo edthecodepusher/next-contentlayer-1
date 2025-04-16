@@ -1,12 +1,11 @@
-// contentlayer.config.ts
 import {
   defineDocumentType,
   makeSource,
   ComputedFields,
+  DocumentType,
 } from "contentlayer/source-files";
 import rehypeHighlight from "rehype-highlight";
-
-import type { RehypePlugin } from "@contentlayer/core";
+import type { Plugin } from "unified";
 
 // Define computed fields with TypeScript typing
 const computedFields: ComputedFields = {
@@ -18,10 +17,14 @@ const computedFields: ComputedFields = {
     type: "string",
     resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
   },
+  readTimeMinutes: {
+    type: "string",
+    resolve: (doc) => calculateReadingTime(doc.body.raw),
+  },
 };
 
 // Define the Page document type
-export const Page = defineDocumentType(() => ({
+export const Page: DocumentType = defineDocumentType(() => ({
   name: "Page",
   filePathPattern: `pages/**/*.mdx`,
   contentType: "mdx",
@@ -32,13 +35,14 @@ export const Page = defineDocumentType(() => ({
     },
     description: {
       type: "string",
+      required: false,
     },
   },
   computedFields,
 }));
 
-// Define the Post document type with category field added
-export const Post = defineDocumentType(() => ({
+// Define the Post document type with author and read time fields
+export const Post: DocumentType = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `posts/**/*.mdx`,
   contentType: "mdx",
@@ -49,6 +53,7 @@ export const Post = defineDocumentType(() => ({
     },
     description: {
       type: "string",
+      required: false,
     },
     date: {
       type: "date",
@@ -56,22 +61,39 @@ export const Post = defineDocumentType(() => ({
     },
     thumbnail: {
       type: "string",
-      required: false, // Set to true if thumbnails are mandatory
+      required: false,
     },
     category: {
-      type: "string",
+      type: "enum",
+      options: ["tech", "lifestyle", "coding", "news"],
       required: true,
-      options: ["tech", "lifestyle", "coding", "news"], // Adjust these to your needs
+    },
+    author: {
+      type: "string", // Changed from "object" to "nested"
+      required: true,
+      fields: {
+        name: { type: "string", required: true },
+        avatar: { type: "string", required: true },
+      },
     },
   },
   computedFields,
 }));
+
+// Function to calculate reading time
+export const calculateReadingTime = (text: string): string => {
+  const wordsPerMinute = 200;
+  const noOfWords = text.split(/\s+/g).length;
+  const minutes = noOfWords / wordsPerMinute;
+  const readTime = Math.ceil(minutes);
+  return `${readTime} min read`;
+};
 
 // Export the Contentlayer source configuration
 export default makeSource({
   contentDirPath: "./content",
   documentTypes: [Post, Page],
   mdx: {
-    rehypePlugins: [[rehypeHighlight] as RehypePlugin], // Explicitly type and call as a plugin
+    rehypePlugins: [],
   },
 });
