@@ -43,7 +43,7 @@ export default function Footer() {
             </Link>
             <Link
               href="https://github.com/yourusername"
-              target="_blank"
+              target="_blank"y
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-accent transition-colors duration-200"
               aria-label="GitHub"

@@ -3,9 +3,9 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
-import Header from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import siteConfig from "@/config/siteConfig";
+import NavBar from "@/components/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,11 +50,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body
-        className={`antialiased min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 ${inter.className} flex flex-col`}
+        className={`max-w-6xl antialiased min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 ${inter.className} flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="mx-auto py-10 px-4 flex-grow">
-            <Header />
+            <NavBar />
             <main>{children}</main>
           </div>
           <Analytics />

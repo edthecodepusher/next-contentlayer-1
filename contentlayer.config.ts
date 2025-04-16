@@ -68,14 +68,6 @@ export const Post: DocumentType = defineDocumentType(() => ({
       options: ["tech", "lifestyle", "coding", "news"],
       required: true,
     },
-    author: {
-      type: "string", // Changed from "object" to "nested"
-      required: true,
-      fields: {
-        name: { type: "string", required: true },
-        avatar: { type: "string", required: true },
-      },
-    },
   },
   computedFields,
 }));
