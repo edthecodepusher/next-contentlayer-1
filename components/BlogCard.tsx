@@ -18,7 +18,7 @@ export default function BlogCard({
   title,
   description = "No description available.",
   date,
-  thumbnail = "/placeholder.svg?height=200&width=300",
+  thumbnail = "/images/placeholder-image.jpg?height=200&width=300",
   slug,
   category,
   readTime,
